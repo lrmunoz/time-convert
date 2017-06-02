@@ -14,3 +14,8 @@ it('has places', () => {
   const app = ReactTestUtils.renderIntoDocument(<App />)
   expect(app.state.places).toBeDefined()
 })
+
+it('has time', () => {
+  const app = ReactTestUtils.renderIntoDocument(<App />)
+  expect(app.state.time).toBeDefined()
+})
