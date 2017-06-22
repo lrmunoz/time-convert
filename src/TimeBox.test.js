@@ -11,7 +11,7 @@ it('renders without crashing', () => {
 })
 
 it('renders a representation of time at a place', () => {
-  const props = {placeName: 'Córdoba', time: '17:36', timezone: 'CET', colorGradient: {first: 'FBDA61', second: 'F76B1C'}}
+  const props = {placeName: 'Córdoba', time: '17:36', timezone: 'CET', colorGradient: {first: '#FBDA61', second: '#F76B1C'}}
   const timeBox = shallow(<TimeBox {...props} />)
   expect(timeBox.text()).toMatch(/Córdoba/)
   expect(timeBox.text()).toMatch(/17:36/)
