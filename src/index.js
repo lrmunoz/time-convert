@@ -4,5 +4,7 @@ import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 import './index.css'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+// eslint-disable-next-line react/no-render-return-value
+const app = ReactDOM.render(<App />, document.getElementById('root'))
+app.addPlace('Córdoba, Spain', 'CEST', 2)
 registerServiceWorker()
