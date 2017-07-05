@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import _ from 'lodash'
 import TimeBox from './TimeBox'
+import moment from 'moment'
 
 class App extends Component {
   constructor (props) {
@@ -31,7 +32,7 @@ class App extends Component {
   }
 
   getTimeBoxProperties (place) {
-    return {placeName: 'Córdoba', time: '17:36', timezone: 'CET', colorGradient: {first: '#FBDA61', second: '#F76B1C'}}
+    return {placeName: place.placeName, time: moment.utc(this.state.time).add(place.utcOffset, 'hours').format('HH:mm'), timezone: place.timezoneName, colorGradient: {first: '#FBDA61', second: '#F76B1C'}}
   }
 }
 

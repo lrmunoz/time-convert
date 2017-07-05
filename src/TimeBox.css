@@ -7,6 +7,10 @@
     display: flex;
 }
 
+.TimeBox:not(:last-child) {
+    margin-right: 24px;
+}
+
 .TimeBox-daylight {
     width: 24px;
     height: 100%;
