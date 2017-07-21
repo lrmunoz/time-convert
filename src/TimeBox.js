@@ -20,8 +20,8 @@ TimeBox.propTypes = {
   placeName: PropTypes.string,
   timezone: PropTypes.string,
   time: PropTypes.string,
-  colorGradient: {
+  colorGradient: PropTypes.shape({
     first: PropTypes.string,
     second: PropTypes.string,
-  }
+  })
 }
