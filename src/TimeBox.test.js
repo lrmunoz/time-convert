@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 
 import React from 'react'
-import ReactDOM from 'react-dom'
 import TimeBox from './TimeBox'
 import { shallow } from 'enzyme'
 

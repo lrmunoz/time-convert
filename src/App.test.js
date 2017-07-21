@@ -20,6 +20,13 @@ it('has time', () => {
   expect(app.state.time).toBeDefined()
 })
 
+it('sets time update', () => {
+  jest.useFakeTimers()
+  ReactTestUtils.renderIntoDocument(<App />)
+  expect(setInterval.mock.calls.length).toBe(1)
+  expect(setInterval.mock.calls[0][1]).toBe(1000)
+})
+
 it('adds a new place', () => {
   const app = ReactTestUtils.renderIntoDocument(<App />)
   app.addPlace('Córdoba, Spain', 'CEST', 2)

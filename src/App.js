@@ -22,6 +22,14 @@ class App extends Component {
     )
   }
 
+  componentDidMount () {
+    setInterval(this.updateTime, 1000)
+  }
+
+  updateTime = () => {
+    this.setState({time: Date.now()})
+  }
+
   addPlace (placeName, timezoneName, utcOffset) {
     this.setState((prevState) => {
       let newState = _.cloneDeep(prevState)
