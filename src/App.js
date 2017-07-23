@@ -17,7 +17,7 @@ class App extends Component {
   render () {
     return (
       <div className='App'>
-        {this.state.places.map((place, index) => <TimeBox key={index} {...this.getTimeBoxProperties(place)} />)}
+        {this.state.places.map((place, index) => <TimeBox key={index} {...this.getTimeBoxProperties(place)} onClose={() => { this.removePlace(index) }} />)}
       </div>
     )
   }
@@ -30,10 +30,13 @@ class App extends Component {
     this.setState({time: Date.now()})
   }
 
+  removePlace = (index) => {
+    this.setState((prevState) => _.assign(_.omit(prevState, 'places'), {places: _.filter(prevState.places, (place, idx) => idx !== index)}))
+  }
+
   addPlace (placeName, timezoneName, utcOffset) {
     this.setState((prevState) => {
       let newState = _.cloneDeep(prevState)
-      // let newState = prevState
       newState.places.push({placeName, timezoneName, utcOffset})
       return newState
     })

@@ -34,3 +34,15 @@ it('adds a new place', () => {
 // eslint-disable-next-line react/no-find-dom-node
   expect(ReactDOM.findDOMNode(app).children).toHaveLength(1)
 })
+
+fit('removes a place', () => {
+  const div = document.createElement('div')
+  let app
+  ReactDOM.render(<App ref={(c) => {app = c}} />, div);
+  app.addPlace('Córdoba, Spain', 'CEST', 2)
+  app.addPlace('Palo Alto, USA', 'PDT', -7)
+  expect(app.state.places).toHaveLength(2)
+  let closeElement = div.querySelector('img')
+  ReactTestUtils.Simulate.click(closeElement)
+  expect(app.state.places).toHaveLength(1)
+})
