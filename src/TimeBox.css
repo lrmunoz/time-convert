@@ -42,3 +42,12 @@
     font-weight: 700;
     text-align: right;
 }
+
+.TimeBox-close svg {
+    height: 14px;
+    width: 14px;
+}
+
+.TimeBox-close:hover {
+    fill: #008C7D;
+}

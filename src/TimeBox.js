@@ -8,7 +8,14 @@ export default function TimeBox (props) {
       <div className="TimeBox">
         <div className="TimeBox-daylight" style={{background: `linear-gradient(${props.colorGradient.first}, ${props.colorGradient.second})`}} />
         <div className="TimeBox-content">
-          <div className="TimeBox-header" ><span>{props.placeName}</span><img src={CloseLogo} alt="close" onClick={props.onClose}/></div>
+          <div className="TimeBox-header" >
+            <span>{props.placeName}</span>
+            <a href="javascript:void(0);" className="TimeBox-close" onClick={props.onClose}>
+              <svg>
+                <use xmlnsXlink="http://www.w3.org/1999/xlink" xlinkHref={CloseLogo + '#close'}></use>
+              </svg>
+            </a>
+          </div>
           <div className="TimeBox-time">{props.time}</div>
           <div className="TimeBox-timezone">{props.timezone}</div>
         </div>

@@ -35,14 +35,14 @@ it('adds a new place', () => {
   expect(ReactDOM.findDOMNode(app).children).toHaveLength(1)
 })
 
-fit('removes a place', () => {
+it('removes a place', () => {
   const div = document.createElement('div')
   let app
   ReactDOM.render(<App ref={(c) => {app = c}} />, div);
   app.addPlace('Córdoba, Spain', 'CEST', 2)
   app.addPlace('Palo Alto, USA', 'PDT', -7)
   expect(app.state.places).toHaveLength(2)
-  let closeElement = div.querySelector('img')
+  let closeElement = div.querySelector('.TimeBox-close')
   ReactTestUtils.Simulate.click(closeElement)
   expect(app.state.places).toHaveLength(1)
 })

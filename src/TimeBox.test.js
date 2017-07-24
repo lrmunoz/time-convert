@@ -16,6 +16,6 @@ it('notifies remove clicked', () => {
   const onClose = jest.fn()
   const props = {placeName: 'Córdoba', time: '17:36', timezone: 'CET', colorGradient: {first: '#FBDA61', second: '#F76B1C'}, onClose: onClose}
   const timeBox = mount(<TimeBox {...props} />)
-  timeBox.find('img').simulate('click')
+  timeBox.find('a').simulate('click')
   expect(onClose.mock.calls.length).toBe(1)
 })
