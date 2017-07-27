@@ -43,7 +43,7 @@ class App extends Component {
   }
 
   getTimeBoxProperties (place) {
-    return {placeName: place.placeName, time: moment.utc(this.state.time).add(place.utcOffset, 'hours').format('HH:mm'), timezone: place.timezoneName, colorGradient: {first: '#FBDA61', second: '#F76B1C'}}
+    return {placeName: place.placeName, time: moment.utc(this.state.time).add(place.utcOffset, 'hours'), timezone: place.timezoneName}
   }
 }
 

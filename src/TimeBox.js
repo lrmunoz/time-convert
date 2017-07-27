@@ -2,11 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './TimeBox.css'
 import CloseLogo from './ic_close.svg'
+import SkyGradient from './SkyGradient'
 
 export default function TimeBox (props) {
   return (
       <div className="TimeBox">
-        <div className="TimeBox-daylight" style={{background: `linear-gradient(${props.colorGradient.first}, ${props.colorGradient.second})`}} />
+        <SkyGradient className="TimeBox-daylight" hourOfDay={props.time.get('hour')} />
         <div className="TimeBox-content">
           <div className="TimeBox-header" >
             <span>{props.placeName}</span>
@@ -16,7 +17,7 @@ export default function TimeBox (props) {
               </svg>
             </a>
           </div>
-          <div className="TimeBox-time">{props.time}</div>
+          <div className="TimeBox-time">{props.time.format('HH:mm')}</div>
           <div className="TimeBox-timezone">{props.timezone}</div>
         </div>
       </div>
@@ -26,10 +27,6 @@ export default function TimeBox (props) {
 TimeBox.propTypes = {
   placeName: PropTypes.string,
   timezone: PropTypes.string,
-  time: PropTypes.string,
-  colorGradient: PropTypes.shape({
-    first: PropTypes.string,
-    second: PropTypes.string
-  }),
+  time: PropTypes.object,
   onClose: PropTypes.func
 }
