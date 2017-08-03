@@ -32,8 +32,30 @@
 }
 
 .TimeBox-time {
+    text-align: center;
+}
+
+.TimeBox-time a {
+    text-decoration: none;
+    color: #4A4A4A;
     font-size: 3em;
     font-weight: 300;
+}
+
+.TimeBox-time a:hover {
+    color: #008C7D;
+}
+
+.TimeBox-time input[type="text"] {
+    display: block;
+    font-size: 3em;
+    font-weight: 300;
+    background-color: #D8D8D8;
+    margin: 0;
+    width: 100%;
+    appearance: none;
+    box-shadow: none;
+    outline: none;
     text-align: center;
 }
 
