@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import './TimeBox.css'
 import CloseLogo from './ic_close.svg'
 import SkyGradient from './SkyGradient'
+import moment from 'moment'
 
 export default class TimeBox extends React.Component {
   constructor (props) {
@@ -52,6 +53,15 @@ export default class TimeBox extends React.Component {
 
   onKeyDownInputTime = (e) => {
     if (e.key === 'Escape') this.setState({editTimeValue: null})
+    if (e.key === 'Enter') {
+      let newValue = e.target.value
+      let inputTime = moment(newValue, 'HH:mm', true)
+      this.setState({editTimeValue: null}, () => {
+        if (inputTime.isValid()) {
+          if (this.props.onChangeTime) this.props.onChangeTime(inputTime)
+        }
+      })
+    }
   }
 
   componentDidUpdate () {
@@ -63,5 +73,6 @@ TimeBox.propTypes = {
   placeName: PropTypes.string,
   timezone: PropTypes.string,
   time: PropTypes.object,
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
+  onChangeTime: PropTypes.func
 }

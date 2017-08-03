@@ -57,7 +57,7 @@ it('return to show time after input time loses focus', () => {
   expect(timeBox.find('.TimeBox-time a').length).toBe(1)
 })
 
-fit('return to show time after pressing Escape during edit', () => {
+it('return to show time after pressing Enter with invalid time without notifying time change', () => {
   const props = {placeName: 'Córdoba', time: moment('2017-01-01T17:36'), timezone: 'CET'}
   const timeBox = mount(<TimeBox {...props} />)
   expect(timeBox.find('.TimeBox-time input').length).toBe(0)
@@ -65,7 +65,25 @@ fit('return to show time after pressing Escape during edit', () => {
   const timeInput = timeBox.find('.TimeBox-time input')
   expect(timeInput.length).toBe(1)
   expect(timeInput.get(0)).toEqual(document.activeElement)
-  timeInput.simulate('keyDown', { key: 'Escape' })
+  timeInput.get(0).value = 'xxx'
+  timeInput.simulate('keyDown', { key: 'Enter' })
   expect(timeBox.find('.TimeBox-time input').length).toBe(0)
   expect(timeBox.find('.TimeBox-time a').length).toBe(1)
+})
+
+it('notifies time change', () => {
+  const onChangeTime = jest.fn()
+  const props = {placeName: 'Córdoba', time: moment('2017-01-01T17:36'), timezone: 'CET', onChangeTime}
+  const timeBox = mount(<TimeBox {...props} />)
+  expect(timeBox.find('.TimeBox-time input').length).toBe(0)
+  timeBox.find('.TimeBox-time a').simulate('click')
+  const timeInput = timeBox.find('.TimeBox-time input')
+  expect(timeInput.length).toBe(1)
+  expect(timeInput.get(0)).toEqual(document.activeElement)
+  timeInput.get(0).value = '10:15'
+  timeInput.simulate('keyDown', { key: 'Enter' })
+  expect(timeBox.find('.TimeBox-time input').length).toBe(0)
+  expect(timeBox.find('.TimeBox-time a').length).toBe(1)
+  expect(onChangeTime.mock.calls.length).toBe(1)
+  expect(onChangeTime.mock.calls[0][0].format('HH:mm')).toEqual('10:15')
 })
