@@ -10,6 +10,7 @@ it('renders a representation of time at a place', () => {
   const timeBox = shallow(<TimeBox {...props} />)
   expect(timeBox.text()).toMatch(/Córdoba/)
   expect(timeBox.text()).toMatch(/17:36/)
+  expect(timeBox.text()).toMatch(/Jan 1st/)
   expect(timeBox.text()).toMatch(/CET/)
 })
 
@@ -55,6 +56,19 @@ it('return to show time after input time loses focus', () => {
   timeInput.simulate('blur')
   expect(timeBox.find('.TimeBox-time input').length).toBe(0)
   expect(timeBox.find('.TimeBox-time a').length).toBe(1)
+})
+
+it('shows validation error with invalid time', () => {
+  const props = {placeName: 'Córdoba', time: moment('2017-01-01T17:36'), timezone: 'CET'}
+  const timeBox = mount(<TimeBox {...props} />)
+  expect(timeBox.find('.TimeBox-time input').length).toBe(0)
+  timeBox.find('.TimeBox-time a').simulate('click')
+  const timeInput = timeBox.find('.TimeBox-time input')
+  expect(timeInput.length).toBe(1)
+  expect(timeInput.get(0)).toEqual(document.activeElement)
+  timeInput.get(0).value = 'xxx'
+  timeInput.simulate('change')
+  expect(timeBox.find('.TimeBox-time_error').length).toBe(1)
 })
 
 it('return to show time after pressing Enter with invalid time without notifying time change', () => {

@@ -25,8 +25,13 @@ export default class TimeBox extends React.Component {
               </svg>
             </a>
           </div>
-          <div className="TimeBox-time">
-            {this.state.editTimeValue !== null ? this.renderInputTime() : this.renderLabelTime()}
+          <div className="TimeBox-datetime">
+            <div className="TimeBox-time">
+              {this.state.editTimeValue !== null ? this.renderInputTime() : this.renderLabelTime()}
+            </div>
+            <div>
+              {this.state.editTimeValue !== null ? this.renderInputTimeValidation() : this.renderLabelDate()}
+            </div>
           </div>
           <div className="TimeBox-timezone">{this.props.timezone}</div>
         </div>
@@ -38,6 +43,10 @@ export default class TimeBox extends React.Component {
 
   renderInputTime = () => <input type="text" value={this.state.editTimeValue} onChange={this.onChangeTime}
                                  onBlur={this.onBlurInputTime} onKeyDown={this.onKeyDownInputTime} ref={c => { this._timeInput = c }}/>
+
+  renderInputTimeValidation = () => moment(this.state.editTimeValue, 'HH:mm', true).isValid() ? <span>&nbsp;</span> : <span className="TimeBox-time_error" >Invalid time</span>
+
+  renderLabelDate = () => <span className="TimeBox-date">{this.props.time.format('MMM Do')}</span>
 
   onClickTime = () => {
     this.setState({editTimeValue: this.props.time.format('HH:mm')})

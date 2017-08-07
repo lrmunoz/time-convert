@@ -31,22 +31,22 @@
     align-items: baseline;
 }
 
-.TimeBox-time {
+.TimeBox-datetime {
     text-align: center;
 }
 
-.TimeBox-time a {
+.TimeBox-datetime .TimeBox-time a {
     text-decoration: none;
     color: #4A4A4A;
     font-size: 3em;
     font-weight: 300;
 }
 
-.TimeBox-time a:hover {
+.TimeBox-datetime .TimeBox-time a:hover {
     color: #008C7D;
 }
 
-.TimeBox-time input[type="text"] {
+.TimeBox-datetime .TimeBox-time input[type="text"] {
     display: block;
     font-size: 3em;
     font-weight: 300;
@@ -57,6 +57,15 @@
     box-shadow: none;
     outline: none;
     text-align: center;
+}
+
+.TimeBox-datetime .TimeBox-date {
+    text-transform: uppercase;
+}
+
+.TimeBox-datetime .TimeBox-time_error {
+    font-size: 14px;
+    color: #cc0000;
 }
 
 .TimeBox-timezone {
