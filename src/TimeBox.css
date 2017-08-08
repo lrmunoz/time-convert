@@ -31,6 +31,12 @@
     align-items: baseline;
 }
 
+.Timebox-header-place {
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
 .TimeBox-datetime {
     text-align: center;
 }
@@ -47,11 +53,12 @@
 }
 
 .TimeBox-datetime .TimeBox-time input[type="text"] {
-    display: block;
     font-size: 3em;
     font-weight: 300;
+    font-family: 'Roboto', sans-serif;
     background-color: transparent;
     margin: 0;
+    border: 0;
     width: 100%;
     appearance: none;
     box-shadow: none;

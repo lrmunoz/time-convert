@@ -18,7 +18,7 @@ export default class TimeBox extends React.Component {
         <SkyGradient className="TimeBox-daylight" hourOfDay={this.props.time.get('hour')} />
         <div className="TimeBox-content">
           <div className="TimeBox-header" >
-            <span>{this.props.placeName}</span>
+            <span className="Timebox-header-place">{this.props.placeName}</span>
             <a href="javascript:void(0);" className="TimeBox-close" onClick={this.props.onClose}>
               <svg>
                 <use xmlnsXlink="http://www.w3.org/1999/xlink" xlinkHref={CloseLogo + '#close'}></use>
