@@ -30,7 +30,7 @@ export default class TimeBox extends React.Component {
               {this.state.editTimeValue !== null ? this.renderInputTime() : this.renderLabelTime()}
             </div>
             <div>
-              {this.state.editTimeValue !== null ? this.renderInputTimeValidation() : this.renderLabelDate()}
+              {this.state.editTimeValue !== null ? <span>&nbsp;</span> : this.renderLabelDate()}
             </div>
           </div>
           <div className="TimeBox-timezone">{this.props.timezone}</div>
@@ -42,9 +42,10 @@ export default class TimeBox extends React.Component {
   renderLabelTime = () => <a href="javascript:void(0);" onClick={this.onClickTime}>{this.props.time.format('HH:mm')}</a>
 
   renderInputTime = () => <input type="text" value={this.state.editTimeValue} onChange={this.onChangeTime}
-                                 onBlur={this.onBlurInputTime} onKeyDown={this.onKeyDownInputTime} ref={c => { this._timeInput = c }}/>
+                                 onBlur={this.onBlurInputTime} onKeyDown={this.onKeyDownInputTime}
+                                 ref={c => { this._timeInput = c }} className={this.inputTimeValidationClass()} />
 
-  renderInputTimeValidation = () => moment(this.state.editTimeValue, 'HH:mm', true).isValid() ? <span>&nbsp;</span> : <span className="TimeBox-time_error" >Invalid time</span>
+  inputTimeValidationClass = () => moment(this.state.editTimeValue, 'HH:mm', true).isValid() ? '' : 'invalid'
 
   renderLabelDate = () => <span className="TimeBox-date">{this.props.time.format('MMM Do')}</span>
 

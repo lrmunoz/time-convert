@@ -50,7 +50,7 @@
     display: block;
     font-size: 3em;
     font-weight: 300;
-    background-color: #D8D8D8;
+    background-color: transparent;
     margin: 0;
     width: 100%;
     appearance: none;
@@ -59,13 +59,12 @@
     text-align: center;
 }
 
-.TimeBox-datetime .TimeBox-date {
-    text-transform: uppercase;
+.TimeBox-datetime .TimeBox-time input[type="text"].invalid {
+    color: #cc0000;
 }
 
-.TimeBox-datetime .TimeBox-time_error {
-    font-size: 14px;
-    color: #cc0000;
+.TimeBox-datetime .TimeBox-date {
+    text-transform: uppercase;
 }
 
 .TimeBox-timezone {

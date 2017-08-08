@@ -68,7 +68,7 @@ it('shows validation error with invalid time', () => {
   expect(timeInput.get(0)).toEqual(document.activeElement)
   timeInput.get(0).value = 'xxx'
   timeInput.simulate('change')
-  expect(timeBox.find('.TimeBox-time_error').length).toBe(1)
+  expect(timeBox.find('.TimeBox-time input .invalid').length).toBe(1)
 })
 
 it('return to show time after pressing Enter with invalid time without notifying time change', () => {
