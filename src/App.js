@@ -9,7 +9,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      time: Date.now(),
+      time: moment(),
       places: []
     }
   }
@@ -20,7 +20,7 @@ class App extends Component {
         {this.state.places.map((place, index) => <TimeBox key={index}
                                                           {...this.getTimeBoxProperties(place)}
                                                           onClose={() => { this.removePlace(index) }}
-                                                          onChangeTime={(newTime) => console.log('>>> newTime', newTime)} />)}
+                                                          onChangeTime={(newTime) => console.log('>>> newTime', newTime.toISOString())} />)}
       </div>
     )
   }
@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   updateTime = () => {
-    this.setState({time: Date.now()})
+    this.setState({time: moment()})
   }
 
   removePlace = (index) => {
