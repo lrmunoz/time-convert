@@ -9,7 +9,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      time: new Date(),
+      time: Date.now(),
       places: []
     }
   }
@@ -17,7 +17,10 @@ class App extends Component {
   render () {
     return (
       <div className='App'>
-        {this.state.places.map((place, index) => <TimeBox key={index} {...this.getTimeBoxProperties(place)} onClose={() => { this.removePlace(index) }} />)}
+        {this.state.places.map((place, index) => <TimeBox key={index}
+                                                          {...this.getTimeBoxProperties(place)}
+                                                          onClose={() => { this.removePlace(index) }}
+                                                          onChangeTime={(newTime) => console.log('>>> newTime', newTime)} />)}
       </div>
     )
   }
@@ -42,9 +45,7 @@ class App extends Component {
     })
   }
 
-  getTimeBoxProperties (place) {
-    return {placeName: place.placeName, time: moment.utc(this.state.time).add(place.utcOffset, 'hours'), timezone: place.timezoneName}
-  }
+  getTimeBoxProperties = (place) => _.assign(place, {time: this.state.time})
 }
 
 export default App

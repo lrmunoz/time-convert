@@ -15,7 +15,7 @@ export default class TimeBox extends React.Component {
   render () {
     return (
       <div className="TimeBox">
-        <SkyGradient className="TimeBox-daylight" hourOfDay={this.props.time.get('hour')} />
+        <SkyGradient className="TimeBox-daylight" hourOfDay={this.getLocalTime().get('hour')} />
         <div className="TimeBox-content">
           <div className="TimeBox-header" >
             <span className="Timebox-header-place">{this.props.placeName}</span>
@@ -33,13 +33,15 @@ export default class TimeBox extends React.Component {
               {this.state.editTimeValue !== null ? <span>&nbsp;</span> : this.renderLabelDate()}
             </div>
           </div>
-          <div className="TimeBox-timezone">{this.props.timezone}</div>
+          <div className="TimeBox-timezone">{this.props.timezoneName}</div>
         </div>
       </div>
     )
   }
 
-  renderLabelTime = () => <a href="javascript:void(0);" onClick={this.onClickTime}>{this.props.time.format('HH:mm')}</a>
+  getLocalTime = () => moment.utc(this.props.time).add(this.props.utcOffset, 'hours')
+
+  renderLabelTime = () => <a href="javascript:void(0);" onClick={this.onClickTime}>{this.getLocalTime().format('HH:mm')}</a>
 
   renderInputTime = () => <input type="text" value={this.state.editTimeValue} onChange={this.onChangeTime}
                                  onBlur={this.onBlurInputTime} onKeyDown={this.onKeyDownInputTime}
@@ -47,10 +49,10 @@ export default class TimeBox extends React.Component {
 
   inputTimeValidationClass = () => moment(this.state.editTimeValue, 'HH:mm', true).isValid() ? '' : 'invalid'
 
-  renderLabelDate = () => <span className="TimeBox-date">{this.props.time.format('MMM Do')}</span>
+  renderLabelDate = () => <span className="TimeBox-date">{this.getLocalTime().format('MMM Do')}</span>
 
   onClickTime = () => {
-    this.setState({editTimeValue: this.props.time.format('HH:mm')})
+    this.setState({editTimeValue: this.getLocalTime().format('HH:mm')})
   }
 
   onChangeTime = (e) => {
@@ -65,10 +67,10 @@ export default class TimeBox extends React.Component {
     if (e.key === 'Escape') this.setState({editTimeValue: null})
     if (e.key === 'Enter') {
       let newValue = e.target.value
-      let inputTime = moment(newValue, 'HH:mm', true)
+      let inputUtcTime = moment.utc(newValue, 'HH:mm', true).subtract(this.props.utcOffset, 'hours')
       this.setState({editTimeValue: null}, () => {
-        if (inputTime.isValid()) {
-          if (this.props.onChangeTime) this.props.onChangeTime(inputTime)
+        if (inputUtcTime.isValid()) {
+          if (this.props.onChangeTime) this.props.onChangeTime(inputUtcTime)
         }
       })
     }
@@ -81,8 +83,9 @@ export default class TimeBox extends React.Component {
 
 TimeBox.propTypes = {
   placeName: PropTypes.string,
-  timezone: PropTypes.string,
+  timezoneName: PropTypes.string,
   time: PropTypes.object,
+  utcOffset: PropTypes.number,
   onClose: PropTypes.func,
   onChangeTime: PropTypes.func
 }
