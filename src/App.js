@@ -10,6 +10,8 @@ class App extends Component {
 
     this.state = {
       time: moment(),
+      frozenTime: false,
+      timeReferencePlaceIndex: null,
       places: []
     }
   }
@@ -20,7 +22,7 @@ class App extends Component {
         {this.state.places.map((place, index) => <TimeBox key={index}
                                                           {...this.getTimeBoxProperties(place)}
                                                           onClose={() => { this.removePlace(index) }}
-                                                          onChangeTime={(newTime) => console.log('>>> newTime', newTime.toISOString())} />)}
+                                                          onChangeTime={(newTime) => this.freezeTime(newTime, index)} />)}
       </div>
     )
   }
@@ -30,7 +32,7 @@ class App extends Component {
   }
 
   updateTime = () => {
-    this.setState({time: moment()})
+    if (!this.state.frozenTime) this.setState({time: moment()})
   }
 
   removePlace = (index) => {
@@ -46,6 +48,10 @@ class App extends Component {
   }
 
   getTimeBoxProperties = (place) => _.assign(place, {time: this.state.time})
+
+  freezeTime = (newTime, index) => {
+    this.setState({time: newTime, frozenTime: true, timeReferencePlaceIndex: index})
+  }
 }
 
 export default App
