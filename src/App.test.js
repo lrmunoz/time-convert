@@ -48,6 +48,16 @@ it('removes a place', () => {
   expect(app.state.places).toHaveLength(1)
 })
 
+it('shows time is live', () => {
+  const div = document.createElement('div')
+  let app
+  ReactDOM.render(<App ref={(c) => { app = c }} />, div)
+  app.addPlace('Córdoba, Spain', 'CEST', 2)
+  app.addPlace('Palo Alto, USA', 'PDT', -7)
+  expect(app.state.places).toHaveLength(2)
+  expect(div.querySelector('.App-header span').innerHTML).toMatch(/Showing current time. Click any box time to do a conversion./)
+})
+
 it('shows time is frozen', () => {
   const div = document.createElement('div')
   let app
@@ -60,8 +70,10 @@ it('shows time is frozen', () => {
   let inputTime = timeBox.querySelector('.TimeBox-time input')
   inputTime.value = '10:12'
   ReactTestUtils.Simulate.keyDown(inputTime, {key: 'Enter'})
-  expect(div.querySelector('.App-header span').innerHTML).toMatch(/Time is fixed/)
+  expect(div.querySelector('.App-header span').innerHTML).toMatch(/Time is fixed by.+Córdoba, Spain/)
   expect(div.querySelector('.App-header span a').innerHTML).toMatch(/RELEASE/)
+  timeBox = div.querySelector('.TimeBox')
+  expect(timeBox.getAttribute('class')).toBe('TimeBox TimeBox_highlight')
 })
 
 it('release frozen time', () => {
