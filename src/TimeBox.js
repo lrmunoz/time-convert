@@ -4,6 +4,7 @@ import './TimeBox.css'
 import CloseLogo from './ic_close.svg'
 import SkyGradient from './SkyGradient'
 import moment from 'moment'
+import _ from 'lodash'
 
 export default class TimeBox extends React.Component {
   constructor (props) {
@@ -14,7 +15,7 @@ export default class TimeBox extends React.Component {
 
   render () {
     return (
-      <div className="TimeBox">
+      <div className={_(['TimeBox', this.props.highlight && 'TimeBox_highlight']).compact().join(' ')}>
         <SkyGradient className="TimeBox-daylight" hourOfDay={this.getLocalTime().get('hour')} />
         <div className="TimeBox-content">
           <div className="TimeBox-header" >
@@ -49,7 +50,7 @@ export default class TimeBox extends React.Component {
 
   inputTimeValidationClass = () => moment(this.state.editTimeValue, 'HH:mm', true).isValid() ? '' : 'invalid'
 
-  renderLabelDate = () => <span className="TimeBox-date">{this.getLocalTime().format('MMM Do')}</span>
+  renderLabelDate = () => this.props.highlight ? <span>&nbsp;</span> : <span className="TimeBox-date">{this.getLocalTime().format('MMM Do')}</span>
 
   onClickTime = () => {
     this.setState({editTimeValue: this.getLocalTime().format('HH:mm')})
@@ -86,6 +87,7 @@ TimeBox.propTypes = {
   timezoneName: PropTypes.string,
   time: PropTypes.object,
   utcOffset: PropTypes.number,
+  highlight: PropTypes.bool,
   onClose: PropTypes.func,
   onChangeTime: PropTypes.func
 }

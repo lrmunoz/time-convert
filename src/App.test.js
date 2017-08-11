@@ -29,10 +29,11 @@ it('sets time update', () => {
 
 it('adds a new place', () => {
   const app = ReactTestUtils.renderIntoDocument(<App />)
+// eslint-disable-next-line react/no-find-dom-node
+  const appNode = ReactDOM.findDOMNode(app)
   app.addPlace('Córdoba, Spain', 'CEST', 2)
   expect(app.state.places).toHaveLength(1)
-// eslint-disable-next-line react/no-find-dom-node
-  expect(ReactDOM.findDOMNode(app).children).toHaveLength(1)
+  expect(appNode.querySelectorAll('.TimeBox')).toHaveLength(1)
 })
 
 it('removes a place', () => {
@@ -45,4 +46,38 @@ it('removes a place', () => {
   let closeElement = div.querySelector('.TimeBox-close')
   ReactTestUtils.Simulate.click(closeElement)
   expect(app.state.places).toHaveLength(1)
+})
+
+it('shows time is frozen', () => {
+  const div = document.createElement('div')
+  let app
+  ReactDOM.render(<App ref={(c) => { app = c }} />, div)
+  app.addPlace('Córdoba, Spain', 'CEST', 2)
+  app.addPlace('Palo Alto, USA', 'PDT', -7)
+  expect(app.state.places).toHaveLength(2)
+  let timeBox = div.querySelector('.TimeBox')
+  ReactTestUtils.Simulate.click(timeBox.querySelector('.TimeBox-time a'))
+  let inputTime = timeBox.querySelector('.TimeBox-time input')
+  inputTime.value = '10:12'
+  ReactTestUtils.Simulate.keyDown(inputTime, {key: 'Enter'})
+  expect(div.querySelector('.App-header span').innerHTML).toMatch(/Time is fixed/)
+  expect(div.querySelector('.App-header span a').innerHTML).toMatch(/RELEASE/)
+})
+
+it('release frozen time', () => {
+  const div = document.createElement('div')
+  let app
+  ReactDOM.render(<App ref={(c) => { app = c }} />, div)
+  app.addPlace('Córdoba, Spain', 'CEST', 2)
+  app.addPlace('Palo Alto, USA', 'PDT', -7)
+  expect(app.state.places).toHaveLength(2)
+  let timeBox = div.querySelector('.TimeBox')
+  ReactTestUtils.Simulate.click(timeBox.querySelector('.TimeBox-time a'))
+  let inputTime = timeBox.querySelector('.TimeBox-time input')
+  inputTime.value = '10:12'
+  ReactTestUtils.Simulate.keyDown(inputTime, {key: 'Enter'})
+  expect(div.querySelector('.App-header span').innerHTML).toMatch(/Time is fixed/)
+  expect(div.querySelector('.App-header span a').innerHTML).toMatch(/RELEASE/)
+  ReactTestUtils.Simulate.click(div.querySelector('.App-header span a'))
+  expect(div.querySelector('.App-header span').innerHTML).not.toMatch(/Time is fixed/)
 })

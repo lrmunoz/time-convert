@@ -7,6 +7,10 @@
     display: flex;
 }
 
+.TimeBox_highlight {
+    outline: #008C7D solid 2px;
+}
+
 .TimeBox:not(:last-child) {
     margin-right: 24px;
 }

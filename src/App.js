@@ -19,10 +19,16 @@ class App extends Component {
   render () {
     return (
       <div className='App'>
-        {this.state.places.map((place, index) => <TimeBox key={index}
-                                                          {...this.getTimeBoxProperties(place)}
-                                                          onClose={() => { this.removePlace(index) }}
-                                                          onChangeTime={(newTime) => this.freezeTime(newTime, index)} />)}
+        <div className="App-header">
+          {this.state.frozenTime ? <span>Time is fixed <a href='javascript:void(0);' onClick={this.releaseTime}>RELEASE</a></span> : <span>&nbsp;</span>}
+        </div>
+        <div className="App-placesContainer">
+          {this.state.places.map((place, index) => <TimeBox key={index}
+                                                            {...this.getTimeBoxProperties(place)}
+                                                            highlight={index === this.state.timeReferencePlaceIndex}
+                                                            onClose={() => { this.removePlace(index) }}
+                                                            onChangeTime={(newTime) => this.freezeTime(newTime, index)} />)}
+        </div>
       </div>
     )
   }
@@ -36,7 +42,8 @@ class App extends Component {
   }
 
   removePlace = (index) => {
-    this.setState((prevState) => _.assign(_.omit(prevState, 'places'), {places: _.filter(prevState.places, (place, idx) => idx !== index)}))
+    this.setState((prevState) =>
+      _.assign(_.omit(prevState, 'places'), {places: _.filter(prevState.places, (place, idx) => idx !== index)}))
   }
 
   addPlace (placeName, timezoneName, utcOffset) {
@@ -51,6 +58,10 @@ class App extends Component {
 
   freezeTime = (newTime, index) => {
     this.setState({time: newTime, frozenTime: true, timeReferencePlaceIndex: index})
+  }
+
+  releaseTime = () => {
+    this.setState({time: moment(), frozenTime: false, timeReferencePlaceIndex: null})
   }
 }
 

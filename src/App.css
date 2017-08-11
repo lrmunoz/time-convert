@@ -1,6 +1,18 @@
 .App {
   background: #EAEAEA;
   height:100vh;
-  display: flex;
   padding: 48px;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 48px;
+  font-size: 16px;
+}
+
+.App-placesContainer {
+  display: flex;
 }
