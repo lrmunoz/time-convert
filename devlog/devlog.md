@@ -5,6 +5,7 @@ Development log
 
 * User can share the current configuration in social networks, at least on facebook, twitter, linkedin
 * User can drag and drop to reorder time boxes. New order reflects on the URL (the URL changes)
+* User can choose time mode, am/pm or 24h
 
 ## Tech stories
 
@@ -18,6 +19,7 @@ Development log
 
 ## Technical debt
 
+* Add licensing
 * Remove event handlers defined with arrow functions of the form `onClose={() => { this.removePlace(index) }` in render methods to prevent avoidable renders
 
 ## Design debt
@@ -25,3 +27,9 @@ Development log
 * When entering an invalid time, show some validation/indication of the situation to the user
 * Make boxes responsive (wrap to next line as screen shrinks)
 * Add transition to sky light component
+* Extract CSS color to constants
+
+## Bugs
+
+* When time is frozen, setting another time in another box doesn't work
+* When clicking on a time, put caret at the end of the input field
