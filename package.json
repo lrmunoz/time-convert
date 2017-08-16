@@ -1,7 +1,8 @@
 {
-  "name": "time-converter",
+  "name": "time-convert",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://lrmunoz.github.io/time-convert",
   "dependencies": {
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
@@ -12,12 +13,15 @@
     "babel-eslint": "^7.2.3",
     "enzyme": "^2.8.2",
     "eslint-plugin-react": "^7.0.1",
+    "gh-pages": "^1.0.0",
     "react-addons-test-utils": "^15.5.1",
     "react-scripts": "1.0.7",
     "react-test-renderer": "^15.5.4",
     "standard": "^10.0.2"
   },
   "scripts": {
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
