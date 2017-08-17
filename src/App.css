@@ -15,4 +15,5 @@
 
 .App-placesContainer {
   display: flex;
+  flex-wrap: wrap;
 }
