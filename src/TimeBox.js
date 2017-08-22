@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import './TimeBox.css'
 import CloseLogo from './ic_close.svg'
 import SkyGradient from './SkyGradient'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import _ from 'lodash'
 
 export default class TimeBox extends React.Component {
@@ -34,13 +34,13 @@ export default class TimeBox extends React.Component {
               {this.state.editTimeValue !== null ? <span>&nbsp;</span> : this.renderLabelDate()}
             </div>
           </div>
-          <div className="TimeBox-timezone">{this.props.timezoneName}</div>
+          <div className="TimeBox-timezone">{this.getLocalTime().zoneAbbr()}</div>
         </div>
       </div>
     )
   }
 
-  getLocalTime = () => moment.utc(this.props.time).add(this.props.utcOffset, 'hours')
+  getLocalTime = () => moment.tz(this.props.time, this.props.timezoneName)
 
   renderLabelTime = () => <a href="javascript:void(0);" onClick={this.onClickTime}>{this.getLocalTime().format('HH:mm')}</a>
 
@@ -68,7 +68,7 @@ export default class TimeBox extends React.Component {
     if (e.key === 'Escape') this.setState({editTimeValue: null})
     if (e.key === 'Enter') {
       let newValue = e.target.value
-      let inputUtcTime = moment.utc(newValue, 'HH:mm', true).subtract(this.props.utcOffset, 'hours')
+      let inputUtcTime = moment.tz(newValue, 'HH:mm', this.props.timezoneName)
       this.setState({editTimeValue: null}, () => {
         if (inputUtcTime.isValid()) {
           if (this.props.onChangeTime) this.props.onChangeTime(inputUtcTime)
@@ -86,7 +86,6 @@ TimeBox.propTypes = {
   placeName: PropTypes.string,
   timezoneName: PropTypes.string,
   time: PropTypes.object,
-  utcOffset: PropTypes.number,
   highlight: PropTypes.bool,
   onClose: PropTypes.func,
   onChangeTime: PropTypes.func

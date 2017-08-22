@@ -31,7 +31,7 @@ it('adds a new place', () => {
   const app = ReactTestUtils.renderIntoDocument(<App />)
 // eslint-disable-next-line react/no-find-dom-node
   const appNode = ReactDOM.findDOMNode(app)
-  app.addPlace('Córdoba, Spain', 'CEST', 2)
+  app.addPlace('Córdoba, Spain', 'Europe/Madrid')
   expect(app.state.places).toHaveLength(1)
   expect(appNode.querySelectorAll('.TimeBox')).toHaveLength(1)
 })
@@ -40,8 +40,8 @@ it('removes a place', () => {
   const div = document.createElement('div')
   let app
   ReactDOM.render(<App ref={(c) => { app = c }} />, div)
-  app.addPlace('Córdoba, Spain', 'CEST', 2)
-  app.addPlace('Palo Alto, USA', 'PDT', -7)
+  app.addPlace('Córdoba, Spain', 'Europe/Madrid')
+  app.addPlace('Palo Alto, USA', 'America/Los_Angeles')
   expect(app.state.places).toHaveLength(2)
   let closeElement = div.querySelector('.TimeBox-close')
   ReactTestUtils.Simulate.click(closeElement)
@@ -52,8 +52,8 @@ it('shows time is live', () => {
   const div = document.createElement('div')
   let app
   ReactDOM.render(<App ref={(c) => { app = c }} />, div)
-  app.addPlace('Córdoba, Spain', 'CEST', 2)
-  app.addPlace('Palo Alto, USA', 'PDT', -7)
+  app.addPlace('Córdoba, Spain', 'Europe/Madrid')
+  app.addPlace('Palo Alto, USA', 'America/Los_Angeles')
   expect(app.state.places).toHaveLength(2)
   expect(div.querySelector('.App-header span').innerHTML).toMatch(/Showing current time. Click any box time to do a conversion./)
 })
@@ -62,8 +62,8 @@ it('shows time is frozen', () => {
   const div = document.createElement('div')
   let app
   ReactDOM.render(<App ref={(c) => { app = c }} />, div)
-  app.addPlace('Córdoba, Spain', 'CEST', 2)
-  app.addPlace('Palo Alto, USA', 'PDT', -7)
+  app.addPlace('Córdoba, Spain', 'Europe/Madrid')
+  app.addPlace('Palo Alto, USA', 'America/Los_Angeles')
   expect(app.state.places).toHaveLength(2)
   let timeBox = div.querySelector('.TimeBox')
   ReactTestUtils.Simulate.click(timeBox.querySelector('.TimeBox-time a'))
@@ -80,8 +80,8 @@ it('release frozen time', () => {
   const div = document.createElement('div')
   let app
   ReactDOM.render(<App ref={(c) => { app = c }} />, div)
-  app.addPlace('Córdoba, Spain', 'CEST', 2)
-  app.addPlace('Palo Alto, USA', 'PDT', -7)
+  app.addPlace('Córdoba, Spain', 'Europe/Madrid')
+  app.addPlace('Palo Alto, USA', 'America/Los_Angeles')
   expect(app.state.places).toHaveLength(2)
   let timeBox = div.querySelector('.TimeBox')
   ReactTestUtils.Simulate.click(timeBox.querySelector('.TimeBox-time a'))

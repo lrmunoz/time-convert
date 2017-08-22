@@ -6,24 +6,24 @@ import { shallow, mount } from 'enzyme'
 import moment from 'moment'
 
 it('renders a representation of time at a place', () => {
-  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'CET', utcOffset: 2}
+  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'Europe/Madrid'}
   const timeBox = shallow(<TimeBox {...props} />)
   expect(timeBox.text()).toMatch(/Córdoba/)
-  expect(timeBox.text()).toMatch(/17:36/)
+  expect(timeBox.text()).toMatch(/16:36/)
   expect(timeBox.text()).toMatch(/Jan 1st/)
   expect(timeBox.text()).toMatch(/CET/)
 })
 
 it('notifies remove clicked', () => {
   const onClose = jest.fn()
-  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'CET', utcOffset: 2, onClose: onClose}
+  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'Europe/Madrid', onClose: onClose}
   const timeBox = mount(<TimeBox {...props} />)
   timeBox.find('.TimeBox-header a').simulate('click')
   expect(onClose.mock.calls.length).toBe(1)
 })
 
 it('replaces time label for edition', () => {
-  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'CET', utcOffset: 2}
+  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'Europe/Madrid'}
   const timeBox = mount(<TimeBox {...props} />)
   expect(timeBox.find('.TimeBox-time input').length).toBe(0)
   timeBox.find('.TimeBox-time a').simulate('click')
@@ -33,7 +33,7 @@ it('replaces time label for edition', () => {
 })
 
 it('empty entered time stays in edit mode', () => {
-  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'CET', utcOffset: 2}
+  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'Europe/Madrid'}
   const timeBox = mount(<TimeBox {...props} />)
   expect(timeBox.find('.TimeBox-time input').length).toBe(0)
   timeBox.find('.TimeBox-time a').simulate('click')
@@ -46,7 +46,7 @@ it('empty entered time stays in edit mode', () => {
 })
 
 it('return to show time after input time loses focus', () => {
-  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'CET', utcOffset: 2}
+  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'Europe/Madrid'}
   const timeBox = mount(<TimeBox {...props} />)
   expect(timeBox.find('.TimeBox-time input').length).toBe(0)
   timeBox.find('.TimeBox-time a').simulate('click')
@@ -59,7 +59,7 @@ it('return to show time after input time loses focus', () => {
 })
 
 it('shows validation error with invalid time', () => {
-  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'CET', utcOffset: 2}
+  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'Europe/Madrid'}
   const timeBox = mount(<TimeBox {...props} />)
   expect(timeBox.find('.TimeBox-time input').length).toBe(0)
   timeBox.find('.TimeBox-time a').simulate('click')
@@ -72,7 +72,7 @@ it('shows validation error with invalid time', () => {
 })
 
 it('return to show time after pressing Enter with invalid time without notifying time change', () => {
-  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'CET', utcOffset: 2}
+  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'Europe/Madrid'}
   const timeBox = mount(<TimeBox {...props} />)
   expect(timeBox.find('.TimeBox-time input').length).toBe(0)
   timeBox.find('.TimeBox-time a').simulate('click')
@@ -87,7 +87,7 @@ it('return to show time after pressing Enter with invalid time without notifying
 
 it('notifies time change', () => {
   const onChangeTime = jest.fn()
-  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'CET', utcOffset: 2, onChangeTime}
+  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), timezoneName: 'Europe/Madrid', onChangeTime}
   const timeBox = mount(<TimeBox {...props} />)
   expect(timeBox.find('.TimeBox-time input').length).toBe(0)
   timeBox.find('.TimeBox-time a').simulate('click')

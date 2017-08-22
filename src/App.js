@@ -45,10 +45,10 @@ class App extends Component {
       _.assign(_.omit(prevState, 'places'), {places: _.filter(prevState.places, (place, idx) => idx !== index)}))
   }
 
-  addPlace (placeName, timezoneName, utcOffset) {
+  addPlace (placeName, timezoneName) {
     this.setState((prevState) => {
       let newState = _.cloneDeep(prevState)
-      newState.places.push({placeName, timezoneName, utcOffset})
+      newState.places.push({placeName, timezoneName})
       return newState
     })
   }
