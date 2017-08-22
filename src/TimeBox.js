@@ -40,7 +40,7 @@ export default class TimeBox extends React.Component {
     )
   }
 
-  getLocalTime = () => moment.tz(this.props.time, this.props.timezoneName)
+  getLocalTime = () => moment.tz(this.props.time, this.props.ianaTimezone)
 
   renderLabelTime = () => <a href="javascript:void(0);" onClick={this.onClickTime}>{this.getLocalTime().format('HH:mm')}</a>
 
@@ -68,7 +68,7 @@ export default class TimeBox extends React.Component {
     if (e.key === 'Escape') this.setState({editTimeValue: null})
     if (e.key === 'Enter') {
       let newValue = e.target.value
-      let inputUtcTime = moment.tz(newValue, 'HH:mm', this.props.timezoneName)
+      let inputUtcTime = moment.tz(newValue, 'HH:mm', this.props.ianaTimezone)
       this.setState({editTimeValue: null}, () => {
         if (inputUtcTime.isValid()) {
           if (this.props.onChangeTime) this.props.onChangeTime(inputUtcTime)
@@ -84,7 +84,7 @@ export default class TimeBox extends React.Component {
 
 TimeBox.propTypes = {
   placeName: PropTypes.string,
-  timezoneName: PropTypes.string,
+  ianaTimezone: PropTypes.string,
   time: PropTypes.object,
   highlight: PropTypes.bool,
   onClose: PropTypes.func,
