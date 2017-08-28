@@ -22,11 +22,14 @@ class App extends Component {
           {this.state.timeReferencePlace ? <span>Time is fixed by <strong>{this.state.timeReferencePlace.placeName}</strong> <a href='javascript:void(0);' onClick={this.releaseTime}>RELEASE</a></span> : <span>{'Showing current time. Click any box time to do a conversion.'}</span>}
         </div>
         <div className="App-placesContainer">
-          {this.state.places.map((place, index) => <TimeBox key={index}
-                                                            {...this.getTimeBoxProperties(place)}
-                                                            highlight={place === this.state.timeReferencePlace}
-                                                            onClose={() => { this.removePlace(index) }}
-                                                            onChangeTime={(newTime) => this.freezeTime(newTime, index)} />)}
+          {this.state.places.map((place, index) => {
+            return <TimeBox key={index}
+                            {...this.getTimeBoxProperties(place)}
+                            highlight={place === this.state.timeReferencePlace}
+                            referenceIanaTimezone={(this.state.timeReferencePlace || {}).ianaTimezone}
+                            onClose={() => { this.removePlace(index) }}
+                            onChangeTime={(newTime) => this.freezeTime(newTime, index)}/>
+          })}
         </div>
       </div>
     )

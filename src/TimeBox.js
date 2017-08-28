@@ -34,13 +34,23 @@ export default class TimeBox extends React.Component {
               {this.state.editTimeValue !== null ? <span>&nbsp;</span> : this.renderLabelDate()}
             </div>
           </div>
-          <div className="TimeBox-timezone">{this.getLocalTime().zoneAbbr()}</div>
+          <div className="TimeBox-timezone">
+            <span>{this.getLocalTime().zoneAbbr()}</span>
+            {this.getOffsetWithReference() ? <span className="TimeBox-timezone-offset"> ({this.getOffsetWithReference() > 0 ? '+' : ''}{this.getOffsetWithReference()} hours)</span> : ''}
+          </div>
         </div>
       </div>
     )
   }
 
   getLocalTime = () => moment.tz(this.props.time, this.props.ianaTimezone)
+
+  getReferenceTime = () => moment.tz(this.props.time, this.props.referenceIanaTimezone)
+
+  getOffsetWithReference = () => {
+    if (!this.props.referenceIanaTimezone) return null
+    return Number((this.getLocalTime().utcOffset() - this.getReferenceTime().utcOffset()) / 60)
+  }
 
   renderLabelTime = () => <a href="javascript:void(0);" onClick={this.onClickTime}>{this.getLocalTime().format('HH:mm')}</a>
 
@@ -85,6 +95,7 @@ export default class TimeBox extends React.Component {
 TimeBox.propTypes = {
   placeName: PropTypes.string,
   ianaTimezone: PropTypes.string,
+  referenceIanaTimezone: PropTypes.string,
   time: PropTypes.object,
   highlight: PropTypes.bool,
   onClose: PropTypes.func,

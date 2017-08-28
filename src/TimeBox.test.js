@@ -14,6 +14,15 @@ it('renders a representation of time at a place', () => {
   expect(timeBox.text()).toMatch(/CET/)
 })
 
+fit('shows difference with reference timezone', () => {
+  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), ianaTimezone: 'Europe/Madrid', referenceIanaTimezone: 'America/Los_Angeles'}
+  const timeBox = shallow(<TimeBox {...props} />)
+  expect(timeBox.text()).toMatch(/Córdoba/)
+  expect(timeBox.text()).toMatch(/16:36/)
+  expect(timeBox.text()).toMatch(/Jan 1st/)
+  expect(timeBox.text()).toMatch(/CET \(\+9 hours\)/)
+})
+
 it('notifies remove clicked', () => {
   const onClose = jest.fn()
   const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), ianaTimezone: 'Europe/Madrid', onClose: onClose}
