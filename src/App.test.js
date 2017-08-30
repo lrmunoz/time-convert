@@ -74,7 +74,7 @@ it('shows time is frozen', () => {
   expect(div.querySelector('.App-header span a').innerHTML).toMatch(/RELEASE/)
   timeBox = div.querySelector('.TimeBox')
   expect(timeBox.getAttribute('class')).toBe('TimeBox TimeBox_highlight')
-  expect(div.querySelectorAll('.TimeBox .TimeBox-timezone')[1].textContent).toMatch(/CET \(-9 hours\)/)
+  expect(div.querySelectorAll('.TimeBox .TimeBox-timezone')[1].textContent).toMatch(/PDT \(-9 hours\)/)
 })
 
 it('release frozen time', () => {

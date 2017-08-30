@@ -14,13 +14,40 @@ it('renders a representation of time at a place', () => {
   expect(timeBox.text()).toMatch(/CET/)
 })
 
-fit('shows difference with reference timezone', () => {
+it('shows difference with reference timezone', () => {
   const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), ianaTimezone: 'Europe/Madrid', referenceIanaTimezone: 'America/Los_Angeles'}
   const timeBox = shallow(<TimeBox {...props} />)
   expect(timeBox.text()).toMatch(/Córdoba/)
   expect(timeBox.text()).toMatch(/16:36/)
-  expect(timeBox.text()).toMatch(/Jan 1st/)
+  expect(timeBox.text()).toMatch(/Same day/)
   expect(timeBox.text()).toMatch(/CET \(\+9 hours\)/)
+})
+
+it('shows difference with reference timezone (1 hour)', () => {
+  const props = {placeName: 'Córdoba', time: moment('2017-01-01T15:36:00.000Z'), ianaTimezone: 'Europe/Madrid', referenceIanaTimezone: 'Europe/London'}
+  const timeBox = shallow(<TimeBox {...props} />)
+  expect(timeBox.text()).toMatch(/Córdoba/)
+  expect(timeBox.text()).toMatch(/16:36/)
+  expect(timeBox.text()).toMatch(/Same day/)
+  expect(timeBox.text()).toMatch(/CET \(\+1 hour\)/)
+})
+
+it('shows difference with reference timezone', () => {
+  const props = {placeName: 'Córdoba', time: moment('2017-01-01T00:36:00.000Z'), ianaTimezone: 'Europe/Madrid', referenceIanaTimezone: 'America/Los_Angeles'}
+  const timeBox = shallow(<TimeBox {...props} />)
+  expect(timeBox.text()).toMatch(/Córdoba/)
+  expect(timeBox.text()).toMatch(/01:36/)
+  expect(timeBox.text()).toMatch(/Next day/)
+  expect(timeBox.text()).toMatch(/CET \(\+9 hours\)/)
+})
+
+it('shows difference with reference timezone (2 days)', () => {
+  const props = {placeName: 'American Samoa', time: moment('2017-01-01T10:15:00.000Z'), ianaTimezone: 'Pacific/Pago_Pago', referenceIanaTimezone: 'Pacific/Kiritimati'}
+  const timeBox = shallow(<TimeBox {...props} />)
+  expect(timeBox.text()).toMatch(/American Samoa/)
+  expect(timeBox.text()).toMatch(/23:15/)
+  expect(timeBox.text()).toMatch(/-2 days/)
+  expect(timeBox.text()).toMatch(/SST \(-25 hours\)/)
 })
 
 it('notifies remove clicked', () => {

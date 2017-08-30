@@ -5,6 +5,7 @@ import CloseLogo from './ic_close.svg'
 import SkyGradient from './SkyGradient'
 import moment from 'moment-timezone'
 import _ from 'lodash'
+import pluralize from 'pluralize'
 
 export default class TimeBox extends React.Component {
   constructor (props) {
@@ -31,12 +32,13 @@ export default class TimeBox extends React.Component {
               {this.state.editTimeValue !== null ? this.renderInputTime() : this.renderLabelTime()}
             </div>
             <div>
-              {this.state.editTimeValue !== null ? <span>&nbsp;</span> : this.renderLabelDate()}
+              {this.state.editTimeValue !== null || this.props.highlight ? <span>&nbsp;</span>
+                : this.props.referenceIanaTimezone ? this.renderOffsetLabel() : this.renderLabelDate()}
             </div>
           </div>
           <div className="TimeBox-timezone">
             <span>{this.getLocalTime().zoneAbbr()}</span>
-            {this.getOffsetWithReference() ? <span className="TimeBox-timezone-offset"> ({this.getOffsetWithReference() > 0 ? '+' : ''}{this.getOffsetWithReference()} hours)</span> : ''}
+            {this.getOffsetWithReference() ? <span className="TimeBox-timezone-offset"> ({this.getOffsetWithReference() > 0 ? '+' : ''}{pluralize('hour', this.getOffsetWithReference(), true)})</span> : ''}
           </div>
         </div>
       </div>
@@ -52,6 +54,15 @@ export default class TimeBox extends React.Component {
     return Number((this.getLocalTime().utcOffset() - this.getReferenceTime().utcOffset()) / 60)
   }
 
+  getOffsetWithReferenceInDays = () => {
+    let diff = moment(this.getLocalTime().format('YYYY-MM-DD')).diff(moment(this.getReferenceTime().format('YYYY-MM-DD')), 'days')
+    return diff === 0 ? 'Same day'
+      : diff === 1 ? 'Next day'
+        : diff === -1 ? 'Previous day'
+          : diff < 0 ? (diff + ' days')
+            : ('+' + diff + ' days')
+  }
+
   renderLabelTime = () => <a href="javascript:void(0);" onClick={this.onClickTime}>{this.getLocalTime().format('HH:mm')}</a>
 
   renderInputTime = () => <input type="text" value={this.state.editTimeValue} onChange={this.onChangeTime}
@@ -60,7 +71,9 @@ export default class TimeBox extends React.Component {
 
   inputTimeValidationClass = () => moment(this.state.editTimeValue, 'HH:mm', true).isValid() ? '' : 'invalid'
 
-  renderLabelDate = () => this.props.highlight ? <span>&nbsp;</span> : <span className="TimeBox-date">{this.getLocalTime().format('MMM Do')}</span>
+  renderLabelDate = () => <span className="TimeBox-date">{this.getLocalTime().format('MMM Do')}</span>
+
+  renderOffsetLabel = () => <span className="TimeBox-date">{this.getOffsetWithReferenceInDays()}</span>
 
   onClickTime = () => {
     this.setState({editTimeValue: this.getLocalTime().format('HH:mm')})
