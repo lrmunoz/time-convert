@@ -19,7 +19,11 @@ class App extends Component {
     return (
       <div className='App'>
         <div className="App-header">
-          {this.state.timeReferencePlace ? <span>Time is fixed by <strong>{this.state.timeReferencePlace.placeName}</strong> <a href='javascript:void(0);' onClick={this.releaseTime}>RELEASE</a></span> : <span>{'Showing current time. Click any box time to do a conversion.'}</span>}
+          <div className='App-header--left'><button onClick={this.handleAddPlace}>Add a new place</button></div>
+          {this.state.timeReferencePlace
+            ? <div><span>Time is fixed by <strong>{this.state.timeReferencePlace.placeName}</strong> <a href='javascript:void(0);' onClick={this.releaseTime}>RELEASE</a></span></div>
+            : <div><span>{'Showing current time. Click any box time to do a conversion.'}</span></div>}
+          <div className='App-header--right'></div>
         </div>
         <div className="App-placesContainer">
           {this.state.places.map((place, index) => {
@@ -37,6 +41,10 @@ class App extends Component {
 
   componentDidMount () {
     setInterval(this.updateTime, 1000)
+  }
+
+  handleAddPlace = () => {
+    console.log('>>>> add a place')
   }
 
   updateTime = () => {
