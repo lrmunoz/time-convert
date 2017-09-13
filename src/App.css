@@ -8,9 +8,9 @@
 
 .App-header {
   display: flex;
-  /*justify-content: center;*/
   margin-bottom: 48px;
   font-size: 16px;
+  align-items: center;
 }
 
 .App-header--right, .App-header--left {

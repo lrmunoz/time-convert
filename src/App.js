@@ -3,6 +3,7 @@ import './App.css'
 import _ from 'lodash'
 import TimeBox from './TimeBox'
 import moment from 'moment'
+import Button from 'react-toolbox/lib/button/Button'
 
 class App extends Component {
   constructor (props) {
@@ -19,7 +20,7 @@ class App extends Component {
     return (
       <div className='App'>
         <div className="App-header">
-          <div className='App-header--left'><button onClick={this.handleAddPlace}>Add a new place</button></div>
+          <div className='App-header--left'><Button raised primary onClick={this.handleAddPlace}>Add a new place</Button></div>
           {this.state.timeReferencePlace
             ? <div><span>Time is fixed by <strong>{this.state.timeReferencePlace.placeName}</strong> <a href='javascript:void(0);' onClick={this.releaseTime}>RELEASE</a></span></div>
             : <div><span>{'Showing current time. Click any box time to do a conversion.'}</span></div>}
