@@ -7,7 +7,7 @@ import theme from './toolbox/theme'
 import './toolbox/theme.css'
 
 let appRef = null
-ReactDOM.render(<ThemeProvider theme={theme}><App ref={(c) => {appRef = c}}/></ThemeProvider>, document.getElementById('root'))
+ReactDOM.render(<ThemeProvider theme={theme}><App ref={(c) => { appRef = c }}/></ThemeProvider>, document.getElementById('root'))
 appRef.addPlace('California, USA', 'America/Los_Angeles')
 appRef.addPlace('Alabama, USA', 'America/Chicago')
 appRef.addPlace('Michigan, USA', 'America/Detroit')

@@ -55,7 +55,7 @@ it('shows time is live', () => {
   app.addPlace('Córdoba, Spain', 'Europe/Madrid')
   app.addPlace('Palo Alto, USA', 'America/Los_Angeles')
   expect(app.state.places).toHaveLength(2)
-  expect(div.querySelector('.App-header span').innerHTML).toMatch(/Showing current time. Click any box time to do a conversion./)
+  expect(div.querySelector('.App-header span').innerHTML).toMatch(/Showing current time. Click the time label in any box to do a conversion/)
 })
 
 it('shows time is frozen', () => {
