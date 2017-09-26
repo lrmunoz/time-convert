@@ -20,7 +20,7 @@ it('shows difference with reference timezone', () => {
   expect(timeBox.text()).toMatch(/Córdoba/)
   expect(timeBox.text()).toMatch(/16:36/)
   expect(timeBox.text()).toMatch(/Same day/)
-  expect(timeBox.text()).toMatch(/CET \(\+9 hours\)/)
+  expect(timeBox.text()).toMatch(/CET \(PST\+9 hours\)/)
 })
 
 it('shows difference with reference timezone (1 hour)', () => {
@@ -29,7 +29,7 @@ it('shows difference with reference timezone (1 hour)', () => {
   expect(timeBox.text()).toMatch(/Córdoba/)
   expect(timeBox.text()).toMatch(/16:36/)
   expect(timeBox.text()).toMatch(/Same day/)
-  expect(timeBox.text()).toMatch(/CET \(\+1 hour\)/)
+  expect(timeBox.text()).toMatch(/CET \(GMT\+1 hour\)/)
 })
 
 it('shows difference with reference timezone', () => {
@@ -38,7 +38,7 @@ it('shows difference with reference timezone', () => {
   expect(timeBox.text()).toMatch(/Córdoba/)
   expect(timeBox.text()).toMatch(/01:36/)
   expect(timeBox.text()).toMatch(/Next day/)
-  expect(timeBox.text()).toMatch(/CET \(\+9 hours\)/)
+  expect(timeBox.text()).toMatch(/CET \(PST\+9 hours\)/)
 })
 
 it('shows difference with reference timezone (2 days)', () => {
@@ -47,7 +47,7 @@ it('shows difference with reference timezone (2 days)', () => {
   expect(timeBox.text()).toMatch(/American Samoa/)
   expect(timeBox.text()).toMatch(/23:15/)
   expect(timeBox.text()).toMatch(/-2 days/)
-  expect(timeBox.text()).toMatch(/SST \(-25 hours\)/)
+  expect(timeBox.text()).toMatch(/SST \(\+14-25 hours\)/)
 })
 
 it('notifies remove clicked', () => {

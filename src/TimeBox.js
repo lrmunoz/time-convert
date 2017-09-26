@@ -38,7 +38,10 @@ export default class TimeBox extends React.Component {
           </div>
           <div className="TimeBox-timezone">
             <span>{this.getLocalTime().zoneAbbr()}</span>
-            {this.getOffsetWithReference() ? <span className="TimeBox-timezone-offset"> ({this.getOffsetWithReference() > 0 ? '+' : ''}{pluralize('hour', this.getOffsetWithReference(), true)})</span> : ''}
+            {this.getOffsetWithReference()
+              ? <span className="TimeBox-timezone-offset"> ({this.getReferenceTime().zoneAbbr()}{this.getOffsetWithReference() > 0 ? '+' : ''}{pluralize('hour', this.getOffsetWithReference(), true)})</span>
+              : ''
+            }
           </div>
         </div>
       </div>

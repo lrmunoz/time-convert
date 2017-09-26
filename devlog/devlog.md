@@ -33,3 +33,4 @@ Development log
 
 * When time is frozen, setting another time in another box doesn't work
 * When clicking on a time, put caret at the end of the input field
+* Fix Pacific/Kiritimati not having a timezone name
