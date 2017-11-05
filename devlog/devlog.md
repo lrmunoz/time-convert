@@ -6,6 +6,7 @@ Development log
 * User can share the current configuration in social networks, at least on facebook, twitter, linkedin
 * User can drag and drop to reorder time boxes. New order reflects on the URL (the URL changes)
 * User can choose time mode, am/pm or 24h
+* User can find out when the next daylight/non-daylight change will happen, or the lack thereof
 
 ## Tech stories
 
@@ -31,6 +32,6 @@ Development log
 
 ## Bugs
 
-* When time is frozen, setting another time in another box doesn't work
+* When time is frozen, setting another time in another box start't work
 * When clicking on a time, put caret at the end of the input field
 * Fix Pacific/Kiritimati not having a timezone name

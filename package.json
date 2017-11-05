@@ -39,7 +39,7 @@
   },
   "reactToolbox": {
     "include": [
-      "BUTTON"
+      "BUTTON", "DIALOG"
     ],
     "customProperties": {
       "color-primary": "#008C7D"

@@ -4,6 +4,7 @@ import _ from 'lodash'
 import TimeBox from './TimeBox'
 import moment from 'moment'
 import Button from 'react-toolbox/lib/button/Button'
+import Dialog from 'react-toolbox/lib/dialog/Dialog'
 
 class App extends Component {
   constructor (props) {
@@ -12,8 +13,13 @@ class App extends Component {
     this.state = {
       time: moment(),
       timeReferencePlace: null,
-      places: []
+      places: [],
+      showAddPlace: false
     }
+  }
+
+  handleToggle = () => {
+    this.setState({showAddPlace: !this.state.showAddPlace})
   }
 
   render () {
@@ -36,6 +42,18 @@ class App extends Component {
                             onChangeTime={(newTime) => this.freezeTime(newTime, index)}/>
           })}
         </div>
+        <Dialog
+          actions={[
+            { label: "Cancel", onClick: this.handleToggle },
+            { label: "Save", onClick: this.handleToggle }
+          ]}
+          active={this.state.showAddPlace}
+          onEscKeyDown={this.handleToggle}
+          onOverlayClick={this.handleToggle}
+          title='Add a new place'
+        >
+          <p>Here you can add arbitrary content. Components like Pickers are using dialogs now.</p>
+        </Dialog>
       </div>
     )
   }
@@ -45,7 +63,7 @@ class App extends Component {
   }
 
   handleAddPlace = () => {
-    console.log('>>>> add a place')
+    this.setState({showAddPlace: true})
   }
 
   updateTime = () => {
