@@ -4,15 +4,26 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import ReactTestUtils from 'react-dom/test-utils'
+import _ from 'lodash'
 
-it('renders without crashing', () => {
-  const div = document.createElement('div')
-  ReactDOM.render(<App />, div)
+let parentComponent
+let dateNow = Date.now
+function renderIntoParent (child) {
+  ReactDOM.render(child, parentComponent)
+}
+
+beforeEach(() => {
+  parentComponent = document.createElement('div')
+  Date.now = jest.fn(() => new Date(Date.UTC(2017, 8, 1)).valueOf())
 })
 
-it('has places', () => {
-  const app = ReactTestUtils.renderIntoDocument(<App />)
-  expect(app.state.places).toBeDefined()
+afterEach(() => {
+  ReactDOM.unmountComponentAtNode(parentComponent)
+  Date.now = dateNow
+})
+
+it('renders without crashing', () => {
+  renderIntoParent(<App />)
 })
 
 it('has time', () => {
@@ -27,16 +38,12 @@ it('sets time update', () => {
   expect(setInterval.mock.calls[0][1]).toBe(1000)
 })
 
-it('adds a new place', () => {
-  const app = ReactTestUtils.renderIntoDocument(<App />)
-// eslint-disable-next-line react/no-find-dom-node
-  const appNode = ReactDOM.findDOMNode(app)
-  app.addPlace('Córdoba, Spain', 'Europe/Madrid')
-  expect(app.state.places).toHaveLength(1)
-  expect(appNode.querySelectorAll('.TimeBox')).toHaveLength(1)
+it('renders a place', () => {
+  renderIntoParent(<App places={[{placeName: 'Córdoba, Spain', ianaTimezone: 'Europe/Madrid'}]}/>)
+  expect(parentComponent.querySelectorAll('.TimeBox')).toHaveLength(1)
 })
 
-it('removes a place', () => {
+xit('removes a place', () => {
   const div = document.createElement('div')
   let app
   ReactDOM.render(<App ref={(c) => { app = c }} />, div)
@@ -49,48 +56,48 @@ it('removes a place', () => {
 })
 
 it('shows time is live', () => {
-  const div = document.createElement('div')
-  let app
-  ReactDOM.render(<App ref={(c) => { app = c }} />, div)
-  app.addPlace('Córdoba, Spain', 'Europe/Madrid')
-  app.addPlace('Palo Alto, USA', 'America/Los_Angeles')
-  expect(app.state.places).toHaveLength(2)
-  expect(div.querySelector('.App-header span').innerHTML).toMatch(/Showing current time. Click the time label in any box to do a conversion/)
+  let places = _([
+    ['Córdoba, Spain', 'Europe/Madrid'],
+    ['Palo Alto, USA', 'America/Los_Angeles']
+  ]).map((cur) => _.zipObject(['placeName', 'ianaTimezone'], cur)).value()
+  renderIntoParent(<App places={places} />)
+  expect(parentComponent.querySelectorAll('.TimeBox')).toHaveLength(2)
+  expect(parentComponent.querySelector('.App-header span').innerHTML).toMatch(/Showing current time. Click the time label in any box to do a conversion/)
 })
 
 it('shows time is frozen', () => {
-  const div = document.createElement('div')
-  let app
-  ReactDOM.render(<App ref={(c) => { app = c }} />, div)
-  app.addPlace('Córdoba, Spain', 'Europe/Madrid')
-  app.addPlace('Palo Alto, USA', 'America/Los_Angeles')
-  expect(app.state.places).toHaveLength(2)
-  let timeBox = div.querySelector('.TimeBox')
+  let places = _([
+    ['Córdoba, Spain', 'Europe/Madrid'],
+    ['Palo Alto, USA', 'America/Los_Angeles']
+  ]).map((cur) => _.zipObject(['placeName', 'ianaTimezone'], cur)).value()
+  renderIntoParent(<App places={places} />)
+  expect(parentComponent.querySelectorAll('.TimeBox')).toHaveLength(2)
+  let timeBox = parentComponent.querySelector('.TimeBox')
   ReactTestUtils.Simulate.click(timeBox.querySelector('.TimeBox-time a'))
   let inputTime = timeBox.querySelector('.TimeBox-time input')
   inputTime.value = '10:12'
   ReactTestUtils.Simulate.keyDown(inputTime, {key: 'Enter'})
-  expect(div.querySelector('.App-header span').innerHTML).toMatch(/Time is fixed by.+Córdoba, Spain/)
-  expect(div.querySelector('.App-header span a').innerHTML).toMatch(/RELEASE/)
-  timeBox = div.querySelector('.TimeBox')
+  expect(parentComponent.querySelector('.App-header span').innerHTML).toMatch(/Time is fixed by.+Córdoba, Spain/)
+  expect(parentComponent.querySelector('.App-header span a').innerHTML).toMatch(/RELEASE/)
+  timeBox = parentComponent.querySelector('.TimeBox')
   expect(timeBox.getAttribute('class')).toBe('TimeBox TimeBox_highlight')
-  expect(div.querySelectorAll('.TimeBox .TimeBox-timezone')[1].textContent).toMatch(/PDT \(CEST-9 hours\)/)
+  expect(parentComponent.querySelectorAll('.TimeBox .TimeBox-timezone')[1].textContent).toMatch(/PDT \(CEST-9 hours\)/)
 })
 
 it('release frozen time', () => {
-  const div = document.createElement('div')
-  let app
-  ReactDOM.render(<App ref={(c) => { app = c }} />, div)
-  app.addPlace('Córdoba, Spain', 'Europe/Madrid')
-  app.addPlace('Palo Alto, USA', 'America/Los_Angeles')
-  expect(app.state.places).toHaveLength(2)
-  let timeBox = div.querySelector('.TimeBox')
+  let places = _([
+    ['Córdoba, Spain', 'Europe/Madrid'],
+    ['Palo Alto, USA', 'America/Los_Angeles']
+  ]).map((cur) => _.zipObject(['placeName', 'ianaTimezone'], cur)).value()
+  renderIntoParent(<App places={places} />)
+  expect(parentComponent.querySelectorAll('.TimeBox')).toHaveLength(2)
+  let timeBox = parentComponent.querySelector('.TimeBox')
   ReactTestUtils.Simulate.click(timeBox.querySelector('.TimeBox-time a'))
   let inputTime = timeBox.querySelector('.TimeBox-time input')
   inputTime.value = '10:12'
   ReactTestUtils.Simulate.keyDown(inputTime, {key: 'Enter'})
-  expect(div.querySelector('.App-header span').innerHTML).toMatch(/Time is fixed/)
-  expect(div.querySelector('.App-header span a').innerHTML).toMatch(/RELEASE/)
-  ReactTestUtils.Simulate.click(div.querySelector('.App-header span a'))
-  expect(div.querySelector('.App-header span').innerHTML).not.toMatch(/Time is fixed/)
+  expect(parentComponent.querySelector('.App-header span').innerHTML).toMatch(/Time is fixed/)
+  expect(parentComponent.querySelector('.App-header span a').innerHTML).toMatch(/RELEASE/)
+  ReactTestUtils.Simulate.click(parentComponent.querySelector('.App-header span a'))
+  expect(parentComponent.querySelector('.App-header span').innerHTML).not.toMatch(/Time is fixed/)
 })

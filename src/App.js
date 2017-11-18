@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import './App.css'
 import _ from 'lodash'
 import TimeBox from './TimeBox'
@@ -13,7 +14,6 @@ class App extends Component {
     this.state = {
       time: moment(),
       timeReferencePlace: null,
-      places: [],
       showAddPlace: false
     }
   }
@@ -33,7 +33,7 @@ class App extends Component {
           <div className='App-header--right'></div>
         </div>
         <div className="App-placesContainer">
-          {this.state.places.map((place, index) => {
+          {this.props.places.map((place, index) => {
             return <TimeBox key={index}
                             {...this.getTimeBoxProperties(place)}
                             highlight={place === this.state.timeReferencePlace}
@@ -44,8 +44,8 @@ class App extends Component {
         </div>
         <Dialog
           actions={[
-            { label: "Cancel", onClick: this.handleToggle },
-            { label: "Save", onClick: this.handleToggle }
+            { label: 'Cancel', onClick: this.handleToggle },
+            { label: 'Save', onClick: this.handleToggle }
           ]}
           active={this.state.showAddPlace}
           onEscKeyDown={this.handleToggle}
@@ -70,23 +70,10 @@ class App extends Component {
     if (!this.state.timeReferencePlace) this.setState({time: moment()})
   }
 
-  removePlace = (index) => {
-    this.setState((prevState) =>
-      _.assign(_.omit(prevState, 'places'), {places: _.filter(prevState.places, (place, idx) => idx !== index)}))
-  }
-
-  addPlace (placeName, ianaTimezone) {
-    this.setState((prevState) => {
-      let newState = _.cloneDeep(prevState)
-      newState.places.push({placeName, ianaTimezone})
-      return newState
-    })
-  }
-
   getTimeBoxProperties = (place) => _.assign(place, {time: this.state.time})
 
   freezeTime = (newTime, index) => {
-    this.setState({time: newTime, timeReferencePlace: this.state.places[index]})
+    this.setState({time: newTime, timeReferencePlace: this.props.places[index]})
   }
 
   releaseTime = () => {
@@ -95,3 +82,11 @@ class App extends Component {
 }
 
 export default App
+
+App.defaultProps = {
+  places: []
+}
+
+App.propTypes = {
+  places: PropTypes.array
+}

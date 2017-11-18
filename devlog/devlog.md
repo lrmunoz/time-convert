@@ -7,6 +7,7 @@ Development log
 * User can drag and drop to reorder time boxes. New order reflects on the URL (the URL changes)
 * User can choose time mode, am/pm or 24h
 * User can find out when the next daylight/non-daylight change will happen, or the lack thereof
+* When empty state, user is informed there are no added places, and he should click the add button
 
 ## Tech stories
 
@@ -22,6 +23,7 @@ Development log
 
 * Add licensing
 * Remove event handlers defined with arrow functions of the form `onClose={() => { this.removePlace(index) }` in render methods to prevent avoidable renders
+* When setting a time in one box, make caret go to the end after entering edit mode
 
 ## Design debt
 
