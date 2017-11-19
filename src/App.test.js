@@ -43,16 +43,18 @@ it('renders a place', () => {
   expect(parentComponent.querySelectorAll('.TimeBox')).toHaveLength(1)
 })
 
-xit('removes a place', () => {
-  const div = document.createElement('div')
-  let app
-  ReactDOM.render(<App ref={(c) => { app = c }} />, div)
-  app.addPlace('Córdoba, Spain', 'Europe/Madrid')
-  app.addPlace('Palo Alto, USA', 'America/Los_Angeles')
-  expect(app.state.places).toHaveLength(2)
-  let closeElement = div.querySelector('.TimeBox-close')
+it('removes a place', () => {
+  const placesChangeHandler = jest.fn()
+  let places = _([
+    ['Córdoba, Spain', 'Europe/Madrid'],
+    ['Palo Alto, USA', 'America/Los_Angeles']
+  ]).map((cur) => _.zipObject(['placeName', 'ianaTimezone'], cur)).value()
+  renderIntoParent(<App places={places} onPlacesChange={placesChangeHandler} />)
+  expect(parentComponent.querySelectorAll('.TimeBox')).toHaveLength(2)
+  let closeElement = parentComponent.querySelector('.TimeBox-close')
   ReactTestUtils.Simulate.click(closeElement)
-  expect(app.state.places).toHaveLength(1)
+  expect(placesChangeHandler.mock.calls.length).toBe(1)
+  expect(_.map(placesChangeHandler.mock.calls[0][0], cur => _.omit(cur, 'time'))).toEqual([{ianaTimezone: 'America/Los_Angeles', placeName: 'Palo Alto, USA'}])
 })
 
 it('shows time is live', () => {

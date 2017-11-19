@@ -79,6 +79,10 @@ class App extends Component {
   releaseTime = () => {
     this.setState({time: moment(), timeReferencePlace: null})
   }
+
+  removePlace = (index) => {
+    ;(this.props.onPlacesChange || _.identity)(_.filter(this.props.places, (cur,idx) => idx !== index))
+  }
 }
 
 export default App
@@ -88,5 +92,6 @@ App.defaultProps = {
 }
 
 App.propTypes = {
-  places: PropTypes.array
+  places: PropTypes.array,
+  onPlacesChange: PropTypes.func
 }

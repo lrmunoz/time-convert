@@ -7,4 +7,18 @@ import theme from './toolbox/theme'
 import './toolbox/theme.css'
 import { decodePlacesUrl, encodePlacesUrl } from './UrlEncoder'
 
-ReactDOM.render(<ThemeProvider theme={theme}><App places={decodePlacesUrl(window.location.hash.substring(1)) || []}/></ThemeProvider>, document.getElementById('root'))
+class AppContext extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {places: decodePlacesUrl(window.location.hash.substring(1)) || []}
+  }
+
+  render () {
+    return <App places={this.state.places} onPlacesChange={this.handlePlacesChange} />
+  }
+
+  handlePlacesChange = (places) => {
+    this.setState({places: places}, () => { window.history.pushState({}, '', '#' + encodePlacesUrl(places)) })
+  }
+}
+ReactDOM.render(<ThemeProvider theme={theme}><AppContext/></ThemeProvider>, document.getElementById('root'))
