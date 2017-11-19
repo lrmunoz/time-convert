@@ -135,5 +135,5 @@ it('notifies time change', () => {
   expect(timeBox.find('.TimeBox-time input').length).toBe(0)
   expect(timeBox.find('.TimeBox-time a').length).toBe(1)
   expect(onChangeTime.mock.calls.length).toBe(1)
-  expect(onChangeTime.mock.calls[0][0].toISOString()).toMatch(/T08:15:00.000Z/)
+  expect(onChangeTime.mock.calls[0][0].toISOString()).toMatch(/T0\d:15:00.000Z/)
 })
