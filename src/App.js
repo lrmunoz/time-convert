@@ -26,7 +26,7 @@ class App extends Component {
     return (
       <div className='App'>
         <div className="App-header">
-          <div className='App-header--left'><Button raised primary onClick={this.handleAddPlace}>Add a new place</Button></div>
+          <div className='App-header--left'></div>
           {this.state.timeReferencePlace
             ? <div><span>Time is fixed by <strong>{this.state.timeReferencePlace.placeName}</strong> <a href='javascript:void(0);' onClick={this.releaseTime}>RELEASE</a></span></div>
             : <div><span>{'Showing current time. Click the time label in any box to do a conversion.'}</span></div>}
