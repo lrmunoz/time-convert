@@ -605,7 +605,12 @@ function encodePlacesUrl(places) {
 
 function decodePlacesUrl(url) {
   if (!url) return null
-  let decoded = JSON.parse(atob(url))
+  let decoded
+  try {
+    decoded = JSON.parse(atob(url))
+  } catch (e) {
+    return null
+  }
   if (typeof decoded !== 'object' || !decoded.hasOwnProperty('v') || decoded.v !== 1) return null
   let rslt = _.map(decoded.l, cur => ({placeName: cur.p, ianaTimezone: TIMEZONES[CURRENT_ENCODING_VERSION][cur.t]}))
   if (_.some(rslt, cur => cur.ianaTimezone === undefined)) return null
