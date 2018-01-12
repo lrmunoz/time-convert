@@ -2,7 +2,7 @@
   "name": "time-convert",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://lrmunoz.github.io/time-convert",
+  "homepage": "https://www.time-convert.com",
   "dependencies": {
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
