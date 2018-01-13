@@ -7,7 +7,7 @@ Development log
 * User can drag and drop to reorder time boxes. New order reflects on the URL (the URL changes)
 * User can choose time mode, am/pm or 24h
 * User can find out when the next daylight/non-daylight change will happen, or the lack thereof
-* When empty state, user is informed there are no added places, and he should click the add button
+* When empty state, user is informed there are no added places, and he should click the add button. Also provide links with sample dashboard configuration
 
 ## Tech stories
 
@@ -37,3 +37,5 @@ Development log
 * When time is frozen, setting another time in another box start't work
 * When clicking on a time, put caret at the end of the input field
 * Fix Pacific/Kiritimati not having a timezone name
+* Empty dashboard still says "Showing current time. Click the time label in any box to do a conversion."
+
