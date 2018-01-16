@@ -7,10 +7,19 @@ import theme from './toolbox/theme'
 import './toolbox/theme.css'
 import { decodePlacesUrl, encodePlacesUrl } from './UrlEncoder'
 
+const defaultPlaces = [
+  {placeName: 'San Francisco, USA', ianaTimezone: 'America/Los_Angeles'},
+  {placeName: 'New York, USA', ianaTimezone: 'America/New_York'},
+  {placeName: 'London, UK', ianaTimezone: 'Europe/London'},
+  {placeName: 'Zürich, Switzerland', ianaTimezone: 'Europe/Zurich'},
+  {placeName: 'Bangalore, India', ianaTimezone: 'Asia/Kolkata'},
+  {placeName: 'Tokyo, Japan', ianaTimezone: 'Asia/Tokyo'}
+]
+
 class AppContext extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {places: decodePlacesUrl(window.location.hash.substring(1)) || []}
+    this.state = {places: decodePlacesUrl(window.location.hash.substring(1)) || defaultPlaces}
   }
 
   render () {
