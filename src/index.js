@@ -2,9 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import './index.css'
-import ThemeProvider from 'react-toolbox/lib/ThemeProvider'
-import theme from './toolbox/theme'
-import './toolbox/theme.css'
 import { decodePlacesUrl, encodePlacesUrl } from './UrlEncoder'
 
 const defaultPlaces = [
@@ -30,4 +27,4 @@ class AppContext extends React.Component {
     this.setState({places: places}, () => { window.history.pushState({}, '', '#' + encodePlacesUrl(places)) })
   }
 }
-ReactDOM.render(<ThemeProvider theme={theme}><AppContext/></ThemeProvider>, document.getElementById('root'))
+ReactDOM.render(<AppContext/>, document.getElementById('root'))
