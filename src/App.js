@@ -4,6 +4,7 @@ import './App.css'
 import _ from 'lodash'
 import TimeBox from './TimeBox'
 import moment from 'moment'
+import { places } from './places'
 
 class App extends Component {
   constructor (props) {
