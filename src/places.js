@@ -1,4 +1,6 @@
 /* eslint-disable quotes */
+/* eslint-disable comma-dangle */
+/* eslint-disable no-trailing-spaces */
 export const places = [
   {placeName: "Ras al-Khaimah, United Arab Emirates", ianaTimezone: 'Asia/Dubai'},
   {placeName: "Dubai, United Arab Emirates", ianaTimezone: 'Asia/Dubai'},
