@@ -5,6 +5,10 @@ import _ from 'lodash'
 import TimeBox from './TimeBox'
 import moment from 'moment'
 import { places } from './places'
+import 'react-select/dist/react-select.css'
+import 'react-virtualized/styles.css'
+import 'react-virtualized-select/styles.css'
+import VirtualizedSelect from 'react-virtualized-select'
 
 class App extends Component {
   constructor (props) {
@@ -20,7 +24,19 @@ class App extends Component {
     return (
       <div className='App'>
         <div className="App-header">
-          <div className='App-header--left'></div>
+          <div className='App-header--left'>
+            <VirtualizedSelect className="App-header--searchPlace"
+                               placeholder="Search place to add..."
+                               options={places}
+                               simpleValue
+                               clearable
+                               name="select-place"
+                               onChange={() => {}}
+                               searchable
+                               labelKey="placeName"
+                               valueKey="placeName"
+            />
+          </div>
           {this.state.timeReferencePlace
             ? <div><span>Time is fixed by <strong>{this.state.timeReferencePlace.placeName}</strong> <a href='javascript:void(0);' onClick={this.releaseTime}>RELEASE</a></span></div>
             : <div><span>{'Showing current time. Click the time label in any box to do a conversion.'}</span></div>}

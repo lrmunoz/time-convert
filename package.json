@@ -9,7 +9,8 @@
     "moment-timezone": "^0.5.13",
     "pluralize": "^7.0.0",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-virtualized-select": "^3.1.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

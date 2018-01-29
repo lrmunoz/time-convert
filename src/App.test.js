@@ -103,3 +103,8 @@ it('release frozen time', () => {
   ReactTestUtils.Simulate.click(parentComponent.querySelector('.App-header span a'))
   expect(parentComponent.querySelector('.App-header span').innerHTML).not.toMatch(/Time is fixed/)
 })
+
+it('has place selection dropdown', () => {
+  renderIntoParent(<App places={[]} />)
+  expect(parentComponent.querySelectorAll('.App-header--searchPlace').length).toBe(1)
+})

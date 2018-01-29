@@ -17,6 +17,10 @@
   flex: 1;
 }
 
+.App-header--searchPlace {
+  max-width: 456px;
+}
+
 .App-placesContainer {
   display: flex;
   flex-wrap: wrap;
