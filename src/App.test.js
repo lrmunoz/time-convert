@@ -64,7 +64,7 @@ it('shows time is live', () => {
   ]).map((cur) => _.zipObject(['placeName', 'ianaTimezone'], cur)).value()
   renderIntoParent(<App places={places} />)
   expect(parentComponent.querySelectorAll('.TimeBox')).toHaveLength(2)
-  expect(parentComponent.querySelector('.App-header span').innerHTML).toMatch(/Showing current time. Click the time label in any box to do a conversion/)
+  expect(parentComponent.querySelector('.App-header .App-header--center span').innerHTML).toMatch(/Showing current time. Click the time label in any box to do a conversion/)
 })
 
 it('shows time is frozen', () => {
@@ -79,8 +79,8 @@ it('shows time is frozen', () => {
   let inputTime = timeBox.querySelector('.TimeBox-time input')
   inputTime.value = '10:12'
   ReactTestUtils.Simulate.keyDown(inputTime, {key: 'Enter'})
-  expect(parentComponent.querySelector('.App-header span').innerHTML).toMatch(/Time is fixed by.+Córdoba, Spain/)
-  expect(parentComponent.querySelector('.App-header span a').innerHTML).toMatch(/RELEASE/)
+  expect(parentComponent.querySelector('.App-header .App-header--center span').innerHTML).toMatch(/Time is fixed by.+Córdoba, Spain/)
+  expect(parentComponent.querySelector('.App-header .App-header--center span a').innerHTML).toMatch(/RELEASE/)
   timeBox = parentComponent.querySelector('.TimeBox')
   expect(timeBox.getAttribute('class')).toBe('TimeBox TimeBox_highlight')
   expect(parentComponent.querySelectorAll('.TimeBox .TimeBox-timezone')[1].textContent).toMatch(/PDT \(CEST-9 hours\)/)
@@ -98,8 +98,8 @@ it('release frozen time', () => {
   let inputTime = timeBox.querySelector('.TimeBox-time input')
   inputTime.value = '10:12'
   ReactTestUtils.Simulate.keyDown(inputTime, {key: 'Enter'})
-  expect(parentComponent.querySelector('.App-header span').innerHTML).toMatch(/Time is fixed/)
-  expect(parentComponent.querySelector('.App-header span a').innerHTML).toMatch(/RELEASE/)
+  expect(parentComponent.querySelector('.App-header .App-header--center span').innerHTML).toMatch(/Time is fixed/)
+  expect(parentComponent.querySelector('.App-header .App-header--center span a').innerHTML).toMatch(/RELEASE/)
   ReactTestUtils.Simulate.click(parentComponent.querySelector('.App-header span a'))
   expect(parentComponent.querySelector('.App-header span').innerHTML).not.toMatch(/Time is fixed/)
 })

@@ -37,9 +37,11 @@ class App extends Component {
                                valueKey="placeName"
             />
           </div>
-          {this.state.timeReferencePlace
-            ? <div><span>Time is fixed by <strong>{this.state.timeReferencePlace.placeName}</strong> <a href='javascript:void(0);' onClick={this.releaseTime}>RELEASE</a></span></div>
-            : <div><span>{'Showing current time. Click the time label in any box to do a conversion.'}</span></div>}
+          <div className='App-header--center'>
+            {this.state.timeReferencePlace
+              ? <div><span>Time is fixed by <strong>{this.state.timeReferencePlace.placeName}</strong> <a href='javascript:void(0);' onClick={this.releaseTime}>RELEASE</a></span></div>
+              : <div><span>{'Showing current time. Click the time label in any box to do a conversion.'}</span></div>}
+          </div>
           <div className='App-header--right'></div>
         </div>
         <div className="App-placesContainer">
