@@ -4,6 +4,7 @@ Development log
 ## User stories
 
 * User can share the current configuration in social networks, at least on facebook, twitter, linkedin
+    * Start with just a button that puts the URL in the clipboard and show a modal to let the user know
 * User can drag and drop to reorder time boxes. New order reflects on the URL (the URL changes)
 * User can choose time mode, am/pm or 24h
 * User can find out when the next daylight/non-daylight change will happen, or the lack thereof
